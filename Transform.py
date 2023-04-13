@@ -33,11 +33,6 @@ print(f"Professores Transformados: {listProfessorTransformada}")
 
 
 
-'''for index in listAlunos:
-    generateNk = index[0]
-    listaAlunosTransformada.append(index)
-    listaAlunosTransformada.append(generateNk)'''
-
 
 
 
