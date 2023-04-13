@@ -1,6 +1,5 @@
-import datetime
 from Extract import listAlunos,listProfessores,listDisciplinas
-datetime.datetime
+
 listAlunosTransformada = []
 listProfessorTransformada = []
 listDisciplinasTransformada = []
