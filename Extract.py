@@ -4,6 +4,10 @@ import psycopg2
 listAlunos = []
 listProfessores = []
 listDisciplinas = []
+listTurmas = []
+listCursos = []
+listHistoricoTempo = []
+listHistoricoEscolar = []
 
 #criando conexão com o postgres
 connectionDataSource = psycopg2.connect(
@@ -32,38 +36,52 @@ getProfessores = cursor.fetchall()
 for row in getProfessores:
     value = row[0],row[1]
     listProfessores.append(value)
+
 # Extraindo dados da tabela alunos
-#sk_alu,nome_alu,data_nasc,email,mgp,nk_alu
+
 cursorAlunos = cursor.execute("SELECT mat_alu,nom_alu,dat_nasc,email,mgp FROM alunos",connectionDataSource)
 getAlunos = cursor.fetchall()
 for row in getAlunos:
     value = row[0],row[1],row[2],row[3],row[4]
     listAlunos.append(value)
 
+# Extraindo dados da tabela turmas
+
+cursorTurmas = cursor.execute("SELECT vag_ocup,tot_vagas FROM turmas ",connectionDataSource)
+getTurmas = cursor.fetchall()
+for row in getTurmas:
+    value = row[0],row[1]
+    listTurmas.append(value)
+
+#Extraindo dados da tabela cursos
+cursorCursos = cursor.execute("SELECT cod_curso,nom_curso,tot_cred FROM cursos",connectionDataSource)
+getCursos = cursor.fetchall()
+for row in getCursos:
+    value = row[0],row[1],row[2]
+    listCursos.append(value)
+
+#Extraindo dados da tabela historico para lançar em tempo
+cursosHistoricoTempo = cursor.execute("SELECT semestre,ano FROM historicos_escolares GROUP BY 1,2", connectionDataSource)
+getHistoricoTempo =  cursor.fetchall()
+for row in getHistoricoTempo:
+    value = row[0],row[1]
+    listHistoricoTempo.append(value)
+
+#Extraindo dados da tabela historico para lançar em fatos
+cursosHistoricoEscolar = cursor.execute("SELECT situacao,faltas,media FROM historicos_escolares", connectionDataSource)
+getHistoricoEscolar =  cursor.fetchall()
+for row in getHistoricoEscolar:
+    value = row[0],row[1],row[2]
+    listHistoricoEscolar.append(value)
+print(listHistoricoEscolar)
 
 #prints testes
 print(f"Disciplinas: {listDisciplinas}")
 print(f"Professores: {listProfessores}")
 print(listAlunos)
+print(f"Lista turmas: {listTurmas}")
+print(listCursos)
 print()
-'''
-cursorProfessor = cursor.execute("SELECT cod_prof, nom_prof, email FROM professores",connectionDataSource)
-getDataProfessor = cursor.fetchall()
-
-cursorAlunos = cursor.execute("SELECT mat_alu,dat_nasc, tot_cred, mgp, nom_alu, email FROM alunos" , connectionDataSource)
-getDataAlunos = cursor.fetchall();
-
-for row in getDataProfessor:
-    #print(row[0])
-    value = row[0],row[1],row[2]
-    listProfessores.append(value)
-
-for row in getDataAlunos:
-    value = row[0], row[1] , row[2] , row[3] , row[4], row[5]
-    listAlunos.append(value)
-
-print(listAlunos)
-print(listProfessores)'''
 
 
 
